@@ -96,6 +96,7 @@ Go to http://localhost:3000
 
 Environment:
 ```
+pc:lenovo ideapad s410
 os: Linux mint 18.0
 mem: 4G DDR
 cpu: Intel(R) Core(TM) i3-4030U CPU @ 1.90GHz  2Core
