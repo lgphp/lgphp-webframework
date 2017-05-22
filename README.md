@@ -12,17 +12,16 @@ beside, Lgphp is very Lighting, total size less than 1M, Lgphp can make you appl
 
 ## Features
 - Support all REST verbs
-
 - Request/Response context, easy parameter handling
 - Middlewares
 - Built-in CSRF support
 - Built-in Session support
-
 - Built-in static file serving
 - Built-in view templating via [plates](https://github.com/thephpleague/plates)
 - https support
 
-come soon
+### come soon
+
 - Built-in async Database support(Mysql)
 - Built-in redis support
 - Websocket support
