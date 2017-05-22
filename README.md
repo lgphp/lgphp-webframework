@@ -90,3 +90,27 @@ php app.php
 ```
 
 Go to http://localhost:3000
+
+## benchmark
+
+
+Environment:
+```
+os: Linux mint 18.0
+mem: 4G DDR
+cpu: Intel(R) Core(TM) i3-4030U CPU @ 1.90GHz  2Core
+
+```
+
+```
+lgphp@lgphp-mint ~ $ wrk -t3 -c1000 -d10s http://localhost:3002/
+Running 10s test @ http://localhost:3002/
+  3 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    25.35ms   13.44ms 317.56ms   96.06%
+    Req/Sec    12.07k     3.31k   19.23k    77.00%
+  360292 requests in 10.06s, 56.35MB read
+Requests/sec:    35802.13
+Transfer/sec:      5.60MB
+
+```
