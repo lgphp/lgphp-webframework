@@ -16,7 +16,8 @@ beside, Lgphp is very Lighting, total size less than 1M, Lgphp can make you appl
 
 ## Examples
 
-```
+```php
+
 require_once "../lgphp/Lgphp.php";
 
 $app = new App();
@@ -28,7 +29,7 @@ RouteHandler::GET("/", function (Request $req, Response $res)  {
 
 $app->startApp($app);
 
-```php
+```
 
 Start your application!
 
