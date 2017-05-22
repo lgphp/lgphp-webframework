@@ -20,12 +20,12 @@ beside, Lgphp is very Lighting, total size less than 1M, Lgphp can make you appl
 - Built-in view templating via [plates](https://github.com/thephpleague/plates)
 - https support
 
-### come soon
+## come soon
 
 - Built-in async Database support(Mysql)
 - Built-in redis support
 - Websocket support
-- 
+
 
 ## Getting started
 
