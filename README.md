@@ -94,7 +94,7 @@ php app.php
 
 Go to http://localhost:3000
 
-## benchmark
+## Benchmark
 
 
 Environment:
