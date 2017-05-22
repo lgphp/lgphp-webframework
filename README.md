@@ -10,11 +10,11 @@ Lgphp intention to provide simple,high performace framework for developers that 
 beside, Lgphp is very Lighting, total size less than 1M, Lgphp can make you application fast as C. 
 
 
-##Features
+## Features
 
-##Getting started
+## Getting started
 
-##Examples
+## Examples
 
 ```
 require_once "../lgphp/Lgphp.php";
@@ -28,7 +28,7 @@ RouteHandler::GET("/", function (Request $req, Response $res)  {
 
 $app->startApp($app);
 
-```
+```php
 
 Start your application!
 
