@@ -12,47 +12,50 @@ require_once "./controller/AdminController.php";
 
 
 
-$app = new App((new Config())->setHost("127.0.0.1")->setPort(3002)->setStaticFileFolder("/public")->setGizp(true)->setPageCache(false));
+$app = new App((new Config())->setHost("127.0.0.1")
+    ->setPort(3002)->setStaticFileFolder("/public")
+    ->setGizp(true)->setPageCache(false)
+    ->setWorkerNum(6)->setReactorNum(2));
 
-SessionConfig::setSession(function (SessionConfig $config) {
-
-    $config->setTimeout(30);
-
-})->sessionStart();
-
-
-$app->addHandler(new class(array(
-    array("GET", "/test/*"),
-    array("POST", "/post")
-)) extends Handler
-{
-    function callback()
-    {
-        return function (Request $req, Response $res) {
-            echo "路过中间件--中间件拦截\n";
-            return $res->next();
-        };
-    }
+//SessionConfig::setSession(function (SessionConfig $config) {
+//
+//    $config->setTimeout(30);
+//
+//})->sessionStart();
 
 
-});
+//$app->addHandler(new class(array(
+//    array("GET", "/test/*"),
+//    array("POST", "/post")
+//)) extends Handler
+//{
+//    function callback()
+//    {
+//        return function (Request $req, Response $res) {
+//            echo "路过中间件--中间件拦截\n";
+//            return $res->next();
+//        };
+//    }
+//
+//
+//});
 
 
-$app->addHandler(new Csrf("x_csrf", "token", "禁止访问", array(
+//$app->addHandler(new Csrf("x_csrf", "token", "禁止访问", array(
+//
+//    array("POST", "/user/showuser"),
+//
+//
+//)));
 
-    array("POST", "/user/showuser"),
 
-
-)));
-
-
-RouteHandler::POST("/user/adduser", function (Request $req, Response $res) {
-    var_dump($req->server("request_method"));
-    var_dump($req->bodyParams("info"));
-//    $a = $req->bodyParams("info");
-//    var_dump($a);
-
-});
+//RouteHandler::POST("/user/adduser", function (Request $req, Response $res) {
+//    var_dump($req->server("request_method"));
+//    var_dump($req->bodyParams("info"));
+////    $a = $req->bodyParams("info");
+////    var_dump($a);
+//
+//});
 
 
 //RouteHandler::GET("/page/:page", function (Request $req, Response $res) {
@@ -133,50 +136,54 @@ RouteHandler::POST("/user/adduser", function (Request $req, Response $res) {
 
 
 RouteHandler::GET("/", function (Request $req, Response $res)  {
-    $t = $res->getTemplateEngine()->render('index', ['name' => 'lgphp']);
-    return $res->end($t);
-
-
-});
-
-RouteHandler::GET("/json", function (Request $req, Response $res): bool {
+//    $t = $res->render('index', ['name' => 'lgphp']);
+//    return $res->end($t);
+  //  return $res->end("hello lgphp");
     $arr = array("key" => "helloword");
     $res->sendJson(json_encode($arr));
-    return $res->die();
-//    $a = $req->bodyParams("info");
-//    var_dump($a);
-
-});
-
-
-RouteHandler::GET("/test", function (Request $req, Response $res): bool {
-
-    $res->send("helloworld");
     return $res->end();
-//    $a = $req->bodyParams("info");
-//    var_dump($a);
+
 
 });
 
-
-RouteHandler::GET("/test/test2", function (Request $req, Response $res) {
-
-    $res->send($req->server("request_uri"));
-//    $a = $req->bodyParams("info");
-//    var_dump($a);
-
-});
-
-RouteHandler::POST("/post", function (Request $req, Response $res) {
-
-    echo "post";
-//    $a = $req->bodyParams("info");
-//    var_dump($a);
-
-});
-
-
-AdminRouters::runAdminRouters();
+//RouteHandler::GET("/json", function (Request $req, Response $res): bool {
+//    $arr = array("key" => "helloword");
+//    $res->sendJson(json_encode($arr));
+//    return $res->die();
+////    $a = $req->bodyParams("info");
+////    var_dump($a);
+//
+//});
+//
+//
+//RouteHandler::GET("/test", function (Request $req, Response $res): bool {
+//
+//    $res->send("helloworld");
+//    return $res->end();
+////    $a = $req->bodyParams("info");
+////    var_dump($a);
+//
+//});
+//
+//
+//RouteHandler::GET("/test/test2", function (Request $req, Response $res) {
+//
+//    $res->send($req->server("request_uri"));
+////    $a = $req->bodyParams("info");
+////    var_dump($a);
+//
+//});
+//
+//RouteHandler::POST("/post", function (Request $req, Response $res) {
+//
+//    echo "post";
+////    $a = $req->bodyParams("info");
+////    var_dump($a);
+//
+//});
+//
+//
+//AdminRouters::runAdminRouters();
 
 $app->startApp($app);
 
