@@ -29,7 +29,10 @@ beside, Lgphp is very Lighting, total size less than 1M, Lgphp can make you appl
 
 ## Getting started
 
-before install lgphp, install PHP7.0 please.
+require: PHP  >=7.0 
+         swoole >=2.0.0
+
+install PHP7.0 before install lgphp framework
 
 Lgphp base on swoole 2.0.7[swoole](https://github.com/swoole/swoole-src/releases/tag/v2.0.7) 
 download swoole sourcecode
