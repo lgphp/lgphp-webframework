@@ -6,9 +6,8 @@
  * Date: 17-5-21
  * Time: 下午9:07
  */
-
+define("zip_type", ["htm", "html", "txt", "css", "js", "svg", "json", "xml", "otf", "ttf", "woff", "woff2"]);
 define("mime_type", array(
-
     'jpg' => 'image/jpg',
     'png' => 'image/png',
     'gif' => 'image/gif',
@@ -26,8 +25,6 @@ define("mime_type", array(
     'woff' => 'application/font-woff',
     'woff2' => 'font/woff2',
     'txt' => 'text/plain'
-
-
 ));
 
 ?>

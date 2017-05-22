@@ -12,7 +12,7 @@ require_once "./controller/AdminController.php";
 
 
 
-$app = new App((new Config())->setHost("127.0.0.1")->setPort(3002)->setStaticFileFolder("/public"));
+$app = new App((new Config())->setHost("127.0.0.1")->setPort(3002)->setStaticFileFolder("/public")->setGizp(true)->setPageCache(false));
 
 SessionConfig::setSession(function (SessionConfig $config) {
 

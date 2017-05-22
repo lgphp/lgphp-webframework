@@ -10,19 +10,22 @@ class StaticFilesHandler extends Handler
 {
 
 
-    private $static_FileFolder="/public";
+    private $static_FileFolder = "/public";
+    private $gzip = false;
+    private $pageCache = false;
 
-    public function __construct(string $static_filefolder = "/public", array $method_and_path = array("GET" => "/*"))
+    public function __construct(Config $serverConfig, array $method_and_path = array("GET" => "/*"))
     {
-        $this->static_FileFolder = $static_filefolder;
+        $this->static_FileFolder = $serverConfig->getStaticFileFolder();
+        $this->gzip = $serverConfig->isGizp();
+        $this->pageCache = $serverConfig->isPageCache();
         parent::__construct($method_and_path);
     }
 
     function callback()
     {
 
-        return function (Request $req, Response $res) : bool {
-
+        return function (Request $req, Response $res): bool {
 
             $req_path = $req->server("request_uri");
             $is_dir = false;
@@ -41,12 +44,23 @@ class StaticFilesHandler extends Handler
                     $etag = md5_file($file_path);
                     $res->header("Last-Modified", gmdate("D, d M Y H:i:s", $last_modified_time) . " GMT");
                     $res->header("Etag", $etag);
-                    if (strtotime($req->header("if-modified-since")) == $last_modified_time or trim($req->header("if-none-match")) == $etag) {
-                        $res->status(304);
-                        return  $res->end();
+                    if ($this->pageCache) {
+                        if (strtotime($req->header("if-modified-since")) == $last_modified_time or trim($req->header("if-none-match")) == $etag) {
+                            $res->status(304);
+                            return $res->end();
+                        }
                     } else {
-                        $res->sendfile($file_path);
-                        return $res->die();
+                        if ($this->gzip) {
+                            if (in_array($file_extname, zip_type)) {
+                                $res->gzip(4);
+                            }
+                            $content = file_get_contents($file_path);
+                            return $res->end($content);
+                        } else {
+
+                            $res->sendfile($file_path);
+                            return $res->die();
+                        }
                     }
 
                 } else {

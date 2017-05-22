@@ -94,7 +94,7 @@ class App
     private function setupHandlers()
     {
 
-        $staticFileHandler = new StaticFilesHandler($this->serverConfig->getStaticFileFolder(), array(
+        $staticFileHandler = new StaticFilesHandler($this->serverConfig, array(
             ["GET", "/*"],
             ["HEAD", "/*"]
         ));

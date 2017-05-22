@@ -17,6 +17,8 @@ class Config
     private $reactor_num = 4;
     private $ssl_cert_file="ssl.crt";
     private $ssl_key_file = "ssl.key";
+    private $gizp = false;
+    private $pageCache = false;
 
     public function __construct()
     {
@@ -155,6 +157,7 @@ class Config
     public function setSslCertFile(string $ssl_cert_file)
     {
         $this->ssl_cert_file = $ssl_cert_file;
+        return $this;
     }
 
     /**
@@ -171,7 +174,45 @@ class Config
     public function setSslKeyFile(string $ssl_key_file)
     {
         $this->ssl_key_file = $ssl_key_file;
+        return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isGizp(): bool
+    {
+        return $this->gizp;
+    }
+
+    /**
+     * @param bool $gizp
+     */
+    public function setGizp(bool $gizp)
+    {
+        $this->gizp = $gizp;
+        return $this;
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPageCache(): bool
+    {
+        return $this->pageCache;
+    }
+
+    /**
+     * @param bool $pageCache
+     */
+    public function setPageCache(bool $pageCache)
+    {
+        $this->pageCache = $pageCache;
+        return $this;
+    }
+
+
 
 
 
