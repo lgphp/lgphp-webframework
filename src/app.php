@@ -134,16 +134,16 @@ $app = new App((new Config())->setHost("127.0.0.1")
 //
 //});
 
+RouteHandler::GET("/hello", function (Request $req , Response $res){
+    $view = $res->render('index', ['name' => 'lgphp']);
+    return $res->end($view);
+});
+
 
 RouteHandler::GET("/", function (Request $req, Response $res)  {
-//    $t = $res->render('index', ['name' => 'lgphp']);
-//    return $res->end($t);
-  //  return $res->end("hello lgphp");
     $arr = array("key" => "helloword");
     $res->sendJson(json_encode($arr));
     return $res->end();
-
-
 });
 
 //RouteHandler::GET("/json", function (Request $req, Response $res): bool {

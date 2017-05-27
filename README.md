@@ -94,6 +94,174 @@ php app.php
 
 Go to http://localhost:3000
 
+## Guide
+- REST  verb
+
+RouteHandler::GET
+RouteHandler::POST
+RouteHandler::DELETE
+RouteHandler::PUT
+
+- Route parameter
+```php
+
+RouteHandler::GET("/user/:page/info/:id", function (Request $req, Response $res) {
+
+    $page = $req->urlParams("page");
+    $page .= $req->urlParams("id");
+    $res->send($page);
+});
+
+
+RouteHandler::POST("/post", function (Request $req, Response $res) {
+ $bodyVal = $req->bodyParams("info");
+});
+
+
+
+
+
+```
+
+- Route group
+```php
+
+RouteHandler::addRouterGroup("/api", array(
+
+    ChildRouter::newChildRouter("GET", "/test", function (Request $req, Response $res) {
+        $res->send("/api/test");
+    }),
+
+    ChildRouter::newChildRouter("GET", "/test2", function (Request $req, Response $res) {
+        $res->send("/api/test2");
+    }),
+
+));
+
+```
+
+- Session
+
+```php
+SessionConfig::setSession(function (SessionConfig $config) {
+
+    $config->setTimeout(30);
+
+})->sessionStart();
+
+//set Seesion
+Session::setSession("login", 1);
+
+//get Session
+$login = Session::getSession("login");
+
+//delete Session
+Session::deleteSession("login");
+
+// destory Session 
+
+Session::destorySession();
+
+// get SessionId
+
+Session::getSessionID();
+
+```
+- CSRF
+
+need Session started
+
+```php
+
+$app->addHandler(new Csrf("x_csrf", "token", "forbidden here!", array(
+
+    array("POST", "/user/showuser"),
+
+
+)));
+
+```
+
+- Middleware 
+
+```php
+
+$app->addHandler(new class(array(
+    // allow routes
+    array("GET", "/test/*"),  //allow /test/ all routes
+    array("POST", "/post")
+)) extends Handler
+{
+    function callback()
+    {
+        return function (Request $req, Response $res) {
+            echo "here you can auth login";
+            //
+            return $res->next();
+        };
+    }
+
+
+});
+
+```
+
+
+- Static File Service
+    - set host
+    - set port
+    - set StaticFileFolder
+    - set Gzip
+    - set Cache
+
+```php
+$app = new App((new Config())->setHost("127.0.0.1")
+    ->setPort(3002)->setStaticFileFolder("/public")
+    ->setGizp(true)->setPageCache(false)
+    ->setWorkerNum(6)->setReactorNum(2));
+
+```
+
+-- render view
+
+```php
+
+RouteHandler::GET("/hello", function (Request $req , Response $res){
+    $model = array("name"=>"lgphp");
+    $view = $res->render('index', $model);
+    return $res->end($view); 
+});
+
+
+```
+
+```html
+
+<h1>Lgphp-PHP</h1>
+<p>Hello, <?=$this->e($name)?></p>
+
+```
+-- Service Json
+
+```php
+RouteHandler::GET("/", function (Request $req, Response $res)  {
+    $arr = array("key" => "helloword");
+    $res->sendJson(json_encode($arr));
+    return $res->end();
+});
+```
+
+
+-- Upload Files
+```php
+
+
+
+
+```
+
+
+
 ## Benchmark
 
 
