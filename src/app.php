@@ -17,6 +17,20 @@ $app = new App((new Config())->setHost("127.0.0.1")
     ->setGizp(true)->setPageCache(false)
     ->setWorkerNum(6)->setReactorNum(2));
 
+
+$app->setTemplateDir("/src/views");
+$app->add404Page(function (Request $req,Response $res){
+
+       $res->end("oop! page is not Found");
+
+});
+
+
+$app->add500Page(function (Request $req,Response $res){
+
+    $res->end("500 internal error!");
+
+});
 //SessionConfig::setSession(function (SessionConfig $config) {
 //
 //    $config->setTimeout(30);

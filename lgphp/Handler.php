@@ -26,5 +26,5 @@ abstract class Handler
             return;
     }
 
-    abstract function callback();
+    abstract function callback()  ;
 }

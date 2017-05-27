@@ -69,6 +69,13 @@ download lgphp-framework's zip [lgphp](https://github.com/lgphp/lgphp-webframewo
 
 ## Examples
 
+```
+
+cd src
+new yourapp.php
+
+```
+
 ```php
 
 require_once "../lgphp/Lgphp.php";
@@ -88,7 +95,7 @@ Start your application!
 
 ```
 
-php app.php
+php yourapp.php
 
 ```
 
@@ -258,8 +265,32 @@ RouteHandler::GET("/", function (Request $req, Response $res)  {
 
 
 ```
+-- customize views folder
+```php
+
+$app->setTemplateDir("/src/views");
 
 
+```
+
+--  customize 404 & 500 Error Pages
+
+```php
+
+$app->add404Page(function (Request $req,Response $res){
+
+       $res->end("oop! page is not Found");
+
+});
+
+
+$app->add500Page(function (Request $req,Response $res){
+
+    $res->end("500 internal error!");
+
+});
+
+```
 
 ## Benchmark
 
