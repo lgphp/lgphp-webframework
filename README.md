@@ -104,10 +104,10 @@ Go to http://localhost:3000
 ## Guide
 - REST  verb
 
-RouteHandler::GET
-RouteHandler::POST
-RouteHandler::DELETE
-RouteHandler::PUT
+    - RouteHandler::GET
+    - RouteHandler::POST
+    - RouteHandler::DELETE
+    - RouteHandler::PUT
 
 - Route parameter
 ```php
