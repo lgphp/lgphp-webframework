@@ -174,8 +174,8 @@ need Session started
 ```php
 
 $app->addHandler(new Csrf("x_csrf", "token", "forbidden here!", array(
-
-    array("POST", "/user/showuser"),
+    //allowed route array
+    array("POST", "/user/showuser"),  
 
 
 )));
@@ -187,8 +187,8 @@ $app->addHandler(new Csrf("x_csrf", "token", "forbidden here!", array(
 ```php
 
 $app->addHandler(new class(array(
-    // allow routes
-    array("GET", "/test/*"),  //allow /test/ all routes
+    //need Auth routes array
+    array("GET", "/test/*"),  // "*" mean is all /test/ routes
     array("POST", "/post")
 )) extends Handler
 {
@@ -196,7 +196,6 @@ $app->addHandler(new class(array(
     {
         return function (Request $req, Response $res) {
             echo "here you can auth login";
-            //
             return $res->next();
         };
     }
