@@ -8,36 +8,56 @@
  */
 
 
-
 class App
 {
 
+    private static $handler_index = 0;
     private $server;
     private $Handlers = array();
     private $errorPageHander = array();
     private $serverConfig;
     private $ssl_key_dir;
-    private static $handler_index = 0;
     private $route_set = array();
-    private $template_engine ;
-    private $template_dir = "/src/views";
+    private $template_engine;
+    private $template_dir = "/views";
+
     public function __construct(Config $config)
     {
 
         $this->serverConfig = $config instanceof Config ? $config : new Config();
+
         if ($this->serverConfig->isSsl()) {
 
             $this->newHttpsServer();
         } else {
-
-            $this->newHttpsServer();
+            $this->newHttpServer();
         }
 
         $this->initHandlers();
     }
 
+
+
+    private function newHttpServer()
+    {
+        $this->server = new swoole_http_server($this->serverConfig->getHost(), $this->serverConfig->getPort(), SWOOLE_BASE);
+
+        $this->server->set(array(
+            'worker_num' => $this->serverConfig->getWorkerNum(),
+            'dispatch_mode' => $this->serverConfig->getDispatchMode(),   //固定分配请求到worker
+            'reactor_num' => $this->serverConfig->getReactorNum(),     //亲核
+             'daemonize' => true,       //守护进程
+            //'backlog' => 128,
+            //'log_file' => '/data/log/test_http_server.log',
+        ));
+    }
+
+
+
+
     private function newHttpsServer()
     {
+
 
         $this->ssl_key_dir = dirname(dirname(__DIR__)) . '/ssl';//sslkey文件存放目录
         $this->server = new swoole_http_server($this->serverConfig->getHost(), $this->serverConfig->getPort(),
@@ -46,6 +66,8 @@ class App
          *     要使用https 需要在编译swoole的时候加上以下
          *     ./configure --enable-sockets --enable-openssl
          */
+
+
         $this->server->set(array(
             'worker_num' => $this->serverConfig->getWorkerNum(),
             'dispatch_mode' => $this->serverConfig->getDispatchMode(),   //固定分配请求到worker
@@ -60,18 +82,7 @@ class App
 
     }
 
-    private function newHttpServer()
-    {
-        $this->server = new swoole_http_server($this->serverConfig->getHost(), $this->serverConfig->getPort(), SWOOLE_BASE);
-        $this->server->set(array(
-            'worker_num' => $this->serverConfig->getWorkerNum(),
-            'dispatch_mode' => $this->serverConfig->getDispatchMode(),   //固定分配请求到worker
-            'reactor_num' => $this->serverConfig->getReactorNum(),     //亲核
-            //'daemonize' => 1,       //守护进程
-            //'backlog' => 128,
-            //'log_file' => '/data/log/test_http_server.log',
-        ));
-    }
+
 
     private function initHandlers()
     {
@@ -90,15 +101,11 @@ class App
         $this->errorPageHander["500"] = $fn_page500page;
     }
 
-
-    private function setupHandlers()
+    public function addHandler(Handler $handler)
     {
+        $this->Handlers[self::$handler_index] = $handler;
+        self::$handler_index++;
 
-        $staticFileHandler = new StaticFilesHandler($this->serverConfig, array(
-            ["GET", "/*"],
-            ["HEAD", "/*"]
-        ));
-        array_unshift($this->Handlers, $staticFileHandler);
     }
 
     /*
@@ -110,13 +117,6 @@ class App
      *
      */
 
-    public function addHandler(Handler $handler)
-    {
-        $this->Handlers[self::$handler_index] = $handler;
-        self::$handler_index++;
-
-    }
-
     public function add404Page($fn)
     {
         $this->errorPageHander["404"] = $fn;
@@ -127,11 +127,10 @@ class App
         $this->errorPageHander["500"] = $fn;
     }
 
-
     /**
      * @param string $template_dir
      */
-    public function setTemplateDir(string $template_dir="/src/views")
+    public function setTemplateDir(string $template_dir = "/src/views")
     {
         $this->template_dir = $template_dir;
     }
@@ -162,9 +161,19 @@ class App
         /**
          * 启动模板引擎
          */
-        $this->template_engine = new League\Plates\Engine(dirname(__DIR__).$this->template_dir);
+        $this->template_engine = new League\Plates\Engine(dirname(__DIR__) . $this->template_dir);
         $this->start();
 
+    }
+
+    private function setupHandlers()
+    {
+
+        $staticFileHandler = new StaticFilesHandler($this->serverConfig, array(
+            ["GET", "/*"],
+            ["HEAD", "/*"]
+        ));
+        array_unshift($this->Handlers, $staticFileHandler);
     }
 
     private function start()
@@ -180,7 +189,7 @@ class App
                 }
 
                 $req_method = strtoupper($req->server["request_method"]);
-                $req_path = $request->server("path_info")??$request->server("request_uri");
+                $req_path = $request->server("path_info") ?? $request->server("request_uri");
                 //  echo $request->server("path_info")."====>".$request->server("request_uri");
                 $handlers = Handlers::HandlersLoop($this->route_set, $req_path, $req_method);
                 if (!empty($handlers)) {
@@ -204,10 +213,9 @@ class App
         };
 
         $this->server->on("request", $fn);
-        echo "server is running at port:{$this->serverConfig->getPort()}";
+        print ("server is running at port:{$this->serverConfig->getPort()}" . "\n");
         $this->server->start();
     }
-
 
 }
 

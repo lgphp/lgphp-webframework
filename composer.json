@@ -1,2 +1,8 @@
 {
+
+    "require": {
+        "mustangostang/spyc": "0.6.2",
+        "rmccue/requests": "v1.7.0"
+    }
+
 }

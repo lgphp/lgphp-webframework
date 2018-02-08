@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mustangostang/spyc" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/rmccue/requests" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHP" type="php">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/mustangostang/spyc" />
+          <root url="file://$MODULE_DIR$/vendor/rmccue/requests" />
+          <root url="file://$MODULE_DIR$/../swoole-helper/ide-helper/output" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/mustangostang/spyc" />
+          <root url="file://$MODULE_DIR$/vendor/rmccue/requests" />
+          <root url="file://$MODULE_DIR$/../swoole-helper/ide-helper/output" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>

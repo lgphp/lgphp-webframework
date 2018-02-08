@@ -10,7 +10,7 @@ class StaticFilesHandler extends Handler
 {
 
 
-    private $static_FileFolder = "/public";
+    private $static_FileFolder = "/statics";
     private $gzip = false;
     private $pageCache = false;
 

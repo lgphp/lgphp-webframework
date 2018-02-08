@@ -13,6 +13,8 @@ class AdminController
 
      public static function login(){
          return function (Request $req,Response $res){
+
+             //$res.header("Content-Type: ","text/html;charset:utf-8");
              $model = $res->render('login',array(
                 'info'=>'登录页面-新方法'
              ));// $res->getTemplateEngine()->render('login', ['info' => '登录页面']);
@@ -22,6 +24,7 @@ class AdminController
 
 
     public static function logout(){
+
         return function (Request $req,Response $res){
 
             return  $res->renderPage('logout',array(

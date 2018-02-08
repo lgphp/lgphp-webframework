@@ -11,6 +11,7 @@ beside, Lgphp is very Lighting, total size less than 1M, Lgphp can make you appl
 
 
 ## Features
+
 - Support all REST verbs
 - Request/Response context, easy parameter handling
 - Middlewares
@@ -19,6 +20,12 @@ beside, Lgphp is very Lighting, total size less than 1M, Lgphp can make you appl
 - Built-in static file serving
 - Built-in view templating via [plates](https://github.com/thephpleague/plates)
 - https support
+- aerospike  ext support
+- docker support
+- kafka ext support
+- zookeeper ext support 
+- redis support
+- mongodb support
 
 ## come soon
 

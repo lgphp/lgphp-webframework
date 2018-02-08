@@ -10,7 +10,7 @@ class Config
 {
     private $host = "0.0.0.0";
     private $port = "3000";
-    private $static_file_folder = "/public";
+    private $static_file_folder = "/statics";
     private $ssl = false;
     private $worker_num = 1;
     private $dispatch_mode = 4;

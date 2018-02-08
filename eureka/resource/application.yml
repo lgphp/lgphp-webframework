@@ -1,0 +1,14 @@
+application:
+  name: cx-core-recommend
+  #以服务名为key
+  cx-core-recommend:
+    intro: 52出行推荐系统
+    author: luogang@52cx.com
+  server:
+    ip-address: 172.17.10.74
+    port: 1500
+eureka:
+  server-url:  http://172.16.10.49:1111/eureka
+  register-self-service: true
+  fetch-service: true
+  fetch-service-list: ['CX-PRE-APP','CX-SERVICE-USER','PHP-SERVICE']

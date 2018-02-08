@@ -27,6 +27,7 @@ class Response
 
     public function sendJson(string $jsonString)
     {
+       // $res->setMimeType("Content-type: text/html; charset=utf-8");
         $this->setMimeType("application/json");
         $this->send($jsonString);
 
@@ -117,11 +118,13 @@ class Response
 
     public function render(string $view_name, array $model): string
     {
+        $this->setMimeType("Content-type: text/html; charset=utf-8");
         return $this->template_engine->render($view_name, $model);
     }
 
     public function renderPage(string $view_name, array $model)
     {
+        $this->setMimeType("Content-type: text/html; charset=utf-8");
         return $this->end($this->template_engine->render($view_name, $model));
 
 
